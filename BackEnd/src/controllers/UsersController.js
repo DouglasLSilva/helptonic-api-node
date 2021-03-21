@@ -9,6 +9,7 @@ module.exports = {
     },
 
     async index(req, res){
+        const a = "teste";
         const data = await User.find({});
 
         return res.json(data);

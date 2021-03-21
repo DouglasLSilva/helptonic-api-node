@@ -1,8 +1,10 @@
-class Users{
-    id;
-    name;
-    email;
-    endereco
-}
+const mongoose = require("mongoose");
 
-module.exports = Users;
+const Schema = mongoose.Schema;
+
+const UserModelSchema = new Schema({
+    name: String,
+    age: Number
+});
+
+module.exports = mongoose.model('User', UserModelSchema)

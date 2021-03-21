@@ -1,9 +1,8 @@
-// const {MongoClient} = require('mongodb');
-// const uri = "mongodb+srv://heltonic:daltonico123@helptonicdb.c5uyv.mongodb.net/HelptonicDataBase?retryWrites=true&w=majority";
+const mongoose = require('mongoose');
+const uri = "mongodb+srv://heltonic:daltonico123@helptonicdb.c5uyv.mongodb.net/HelptonicDataBase?retryWrites=true&w=majority";
 
-// MongoClient.connect(uri, function(err,db){
-//     if (err) throw err;
-//     console.log("Database created!");
-//     db.close();
-// });
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+module.exports = db;

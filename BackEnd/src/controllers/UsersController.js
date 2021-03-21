@@ -1,22 +1,16 @@
-const { response } = require("express");
+const User = require("../models/User");
 const connection = require("../dataBase/connection");
 
-const userService = require("../services/UserService")
+module.exports = {
+    async store(req, res){       
+        const data = await User.create(req.body);
 
-function List(req, res) {
-    const teste = {
-        nome: "luis", 
-        idade: 123
+        return res.json(data);
+    },
+
+    async index(req, res){
+        const data = await User.find({});
+
+        return res.json(data);
     }
-
-        return res.json(teste)
-    }
-
-function Delete(params) {
-        
-}
-
-module.exports={
-    List,
-    Delete
 }

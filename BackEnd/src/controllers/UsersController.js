@@ -1,16 +1,12 @@
-const User = require("../models/User");
-const connection = require("../dataBase/connection");
+const UserService = require("../services/userService");
 
 module.exports = {
-    async store(req, res){       
-        const data = await User.create(req.body);
-
-        return res.json(data);
+    async post(req, res){       
+        // const data = await User.create(req.body);
+        return res.json(await UserService.post(req.body));
     },
 
-    async index(req, res){
-        const data = await User.find({});
-
-        return res.json(data);
+    async list(req, res){
+        return res.json(await UserService.list());
     }
 }

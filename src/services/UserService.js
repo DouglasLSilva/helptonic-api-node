@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const connection = require("../dataBase/connection");
+const cript = require("../Util/Crypt")
+
 
 module.exports = {
     async list(){
@@ -15,6 +17,13 @@ module.exports = {
 
         return await User.find({_id : id});
     },
+    async getByEmail(email){
+        if(email == undefined){
+            return {error: 'email undefined'};
+        }
+
+        return await User.find({email : email});
+    },
 
     async put(params){
         const {_id} = params;
@@ -28,7 +37,9 @@ module.exports = {
         return true;
     },
 
-    async post(params) {
+    async post(params) {        
+        params['password']= cript.crypt(params['password']);
+
         const {_id} = await User.create(params);
 
         return _id;   

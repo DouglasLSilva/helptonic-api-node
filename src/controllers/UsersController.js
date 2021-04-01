@@ -1,35 +1,26 @@
 const UserService = require("../services/UserService");
 
 module.exports = {
-    async list(req, res){
-        return res.json(await UserService.list());
-    },
+    async register(req, res, next){
+        try{
+            const {email} = req.body;
+            const existEmail = await UserService.getByEmail(email);
 
-    async getById(req, res){
-        return res.json(await UserService.getById(req.params));
-    },
+            if(existEmail != null){
+                return res.status(404).json({error:"Email is already registered"});
+            }
 
-    async put(req, res){
-        const change = await UserService.put(req.body);
+            const response = await UserService.post(req.body)
 
-        if(change != true){
-            return response.status(404).json({error: 'error'});
+            if(response == null){
+                return res.status(404).json({error:"Error creating account"});
+            }
+
+            return res.status(200).json(response);
         }
-
-        return response.status(200).send()
-    },
-
-    async post(req, res){       
-        return res.json(await UserService.post(req.body));
-    },
-
-    async delete(req, res){
-        const data = await UserService.delete(req.params);
-
-        if(!data){
-            res.json({error:"Register doesn't exist"});
+        catch(e)
+        {
+            return res.status(500).json({error:"Internal Server Error"});
         }
-        
-        return res.status(200).send();
-    }
+    }   
 }

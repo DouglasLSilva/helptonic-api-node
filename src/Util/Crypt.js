@@ -1,10 +1,10 @@
 const crypto = require('crypto');
-const secret = 's14i27d35l05';
+require("dotenv-safe").config();
 
 module.exports = {
     crypt(params){
         const hash = crypto
-        .createHash('sha256', secret)
+        .createHash('sha256', process.env.PASSWORD)
         .update(params)
         .digest('hex');
 

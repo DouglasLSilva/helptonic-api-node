@@ -8,14 +8,21 @@ module.exports = {
         var userId = params['userId'];
         var photoId = params['photoId'];
 
-        if(userId == undefined){
-            return {error: 'user id undefined'};
+        if(userId == undefined||userId.trim()==''){
+            return {message: 'user id undefined',error:true};
         }
-        else if(photoId == undefined){
-            return {error: 'photo id undefined'}
+        else if(photoId == undefined||userId.trim()==''){
+            return {message: 'photo id undefined', error:true}
         }
+
+        const response = await User.findOne({_id: userId},{photo:{$elemMatch:{_id: photoId}}});
+
+        if(response == null){
+            return {message: 'photo not found', error:true}
+        }
+
         //{"_id": id},{awards: {$elemMatch: {award:'Turing Award', year:1977}}}
-        return await User.find({_id: userId},{photo:{$elemMatch:{_id: photoId}}} );
+        return {response : response, error:false};
     },
 
     async post(params) {        
@@ -23,10 +30,10 @@ module.exports = {
         var photoParams = params['photo'];
 
         if(userId == undefined){
-            return {error: 'user id undefined'};
+            return {message: 'user id undefined', error:true};
         }
 
-        return await User.findOneAndUpdate({_id: userId},{ $push: {photo: photoParams}});   
+        return {response : await User.findOneAndUpdate({_id: userId},{ $push: {photo: photoParams}}), error:false};   
     },
 
 
@@ -35,12 +42,12 @@ module.exports = {
         var photoId = params['photoId'];
 
         if(userId == undefined){
-            return {error: 'user id undefined'};
+            return {message: 'user id undefined',error:true};
         }
         if(photoId == undefined){
-            return {error: 'photo id undefined'};
+            return {message: 'photo id undefined', error:true};
         }
 
-        return await User.findOneAndUpdate({_id: userId},{ $pull: {photo: {_id: photoId}}});     
+        return {response : await User.findOneAndUpdate({_id: userId},{ $pull: {photo: {_id: photoId}}}), error:false};     
     },
 }

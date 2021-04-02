@@ -1,20 +1,17 @@
 const express = require('express');
 const routes = express.Router();
+const { verifyJWT } = require('./Util/Jwt');
 
-const UserController = require('./controllers/UsersController');
+const UsersController = require('./controllers/UsersController');
 const LoginController = require('./controllers/LoginController');
 const PhotoController = require('./controllers/PhotoController');
 
-routes.get('/user', UserController.list);
-routes.get('/user/:id', UserController.getById);
-routes.post('/user', UserController.post);
-routes.delete('/user/:id', UserController.delete);
-routes.put('/user', UserController.put);
-
-routes.post('/photo', PhotoController.post);
-routes.delete('/photo', PhotoController.delete);
-routes.get('/photo', PhotoController.getById);
+routes.post('/user', UsersController.register);
 
 routes.post('/login', LoginController.login);
+
+routes.get('/photo',verifyJWT, PhotoController.getById);
+routes.post('/photo',verifyJWT, PhotoController.post);
+routes.delete('/photo',verifyJWT, PhotoController.delete);
 
 module.exports = routes;

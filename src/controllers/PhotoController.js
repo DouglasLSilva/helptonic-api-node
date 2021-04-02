@@ -2,21 +2,50 @@ const PhotoService = require("../services/PhotoService");
 
 module.exports = {
 
-    async getById(req, res){
-        return res.json(await PhotoService.getById(req.body));
-    },
+    async getById(req, res, next){
+        try{
+            const {response, message, error} = await PhotoService.getById(req.body)
 
-    async post(req, res){       
-        return res.json(await PhotoService.post(req.body));
-    },
+            if(error == true){
+                return res.status(404).json({error: message})
+            }                
 
-    async delete(req, res){
-        const data = await PhotoService.delete(req.body);
-
-        if(!data){
-            res.json({error:"Register doesn't exist"});
+            return res.status(200).json(response);
         }
-        
-        return res.status(200).send();
+        catch(e){
+            return res.status(500).json({message:"Internal Server Error", error:true});            
+        }
+    },
+
+    async post(req, res, next){       
+        try{
+
+            const {response, message, error} = await PhotoService.post(req.body)
+
+            if(error == true){
+                return res.status(404).json({error: message})
+            } 
+
+            return res.status(200).send(true);
+        }
+        catch(e){
+            return res.status(500).json({message:"Internal Server Error", error:true});            
+        }
+    },
+
+    async delete(req, res, next){
+        try
+        {
+            const {message, error} = await PhotoService.delete(req.body);
+
+            if(error){
+                res.status(404).json({message:message});
+            }
+            
+            return res.status(200).json(true);
+        }
+        catch(e){
+            return res.status(500).json({message:"Internal Server Error", error:true});            
+        }
     }
 }

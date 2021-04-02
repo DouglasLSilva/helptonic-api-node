@@ -4,13 +4,18 @@ const cript = require("../Util/Crypt");
 module.exports = {
     async Login(params){
         const {email, password} = params;
-
         const user = await UserService.getByEmail(email);
+
+        if(user == undefined)
+            return null;
+
         const passHash = cript.crypt(password);
 
-        if(user[0]['password'] != passHash)
-            return false;
+        if(user['password'] != passHash)
+            return null;
+        
+        user['password'] = "";
 
-        return true;
-    },
+        return user;
+    },       
 }

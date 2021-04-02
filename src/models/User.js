@@ -8,7 +8,8 @@ const UserModelSchema = new Schema({
     password: String,
     name: String,
     typeColorBlindess: String,
-    photo: [PhotoModel]
+    photo: [PhotoModel],
+    token:String
 });
 
 module.exports = mongoose.model('User', UserModelSchema)

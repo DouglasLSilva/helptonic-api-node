@@ -8,13 +8,13 @@ module.exports = {
             const existEmail = await UserService.getByEmail(email);
 
             if(existEmail != null){
-                return res.status(400).json({error:"Email is already registered"});
+                return res.status(400).json({message:"Email is already registered",error:true});
             }
 
             const response = await UserService.post(req.body)
 
             if(response == null){
-                return res.status(400).json({error:"Error creating account"});
+                return res.status(400).json({message:"Error creating account",error:true});
             }
 
             const id = response['id']; 
@@ -25,7 +25,7 @@ module.exports = {
         }
         catch(e)
         {
-            return res.status(500).json({error:"Internal Server Error"});
+            return res.status(500).json({message:"Internal Server Error",error:true});
         }
     }   
 }

@@ -1,5 +1,6 @@
 const Photo = require("../models/Photo");
 const User = require("../models/User");
+const UserService = require("./UserService");
 
 
 module.exports = {
@@ -15,25 +16,34 @@ module.exports = {
             return {message: 'photo id undefined', error:true}
         }
 
-        const response = await User.findOne({_id: userId},{photo:{$elemMatch:{_id: photoId}}});
+        const response = await User.findOne({_id: userId}).select({photo:{$elemMatch: {_id: photoId}}})
 
         if(response == null){
             return {message: 'photo not found', error:true}
         }
 
-        //{"_id": id},{awards: {$elemMatch: {award:'Turing Award', year:1977}}}
         return {response : response, error:false};
     },
 
-    async post(params) {        
+    async post(params) {   
+
         var userId = params['userId'];
         var photoParams = params['photo'];
-
+        const verifyUser = await UserService.getById(userId);
+       
         if(userId == undefined){
             return {message: 'user id undefined', error:true};
         }
 
-        return {response : await User.findOneAndUpdate({_id: userId},{ $push: {photo: photoParams}}), error:false};   
+        const responseData = await User.updateOne({
+            _id: userId
+            },
+            { 
+                $push: {photo: photoParams}
+            }
+        );
+
+        return {response : responseData, error:false};   
     },
 
 
@@ -48,6 +58,8 @@ module.exports = {
             return {message: 'photo id undefined', error:true};
         }
 
-        return {response : await User.findOneAndUpdate({_id: userId},{ $pull: {photo: {_id: photoId}}}), error:false};     
+        const resp = await User.updateMany({_id: userId},{ $pull: { photo : { _id: [photoId]}}});
+
+        return {error:false};     
     },
 }

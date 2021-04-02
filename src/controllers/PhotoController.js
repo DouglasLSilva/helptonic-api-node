@@ -3,36 +3,49 @@ const PhotoService = require("../services/PhotoService");
 module.exports = {
 
     async getById(req, res, next){
-        const {response, message, error} = await PhotoService.getById(req.body)
-        if(error == true){
-            return res.status(404).json({error: message})
-        }                
+        try{
+            const {response, message, error} = await PhotoService.getById(req.body)
 
-        return res.status(200).json(response);
+            if(error == true){
+                return res.status(404).json({error: message})
+            }                
+
+            return res.status(200).json(response);
+        }
+        catch(e){
+            return res.status(500).json({message:"Internal Server Error", error:true});            
+        }
     },
 
     async post(req, res, next){       
-        const {response, message, error} = await PhotoService.post(req.body)
-        if(error == true){
-            return res.status(404).json({error: message})
-        } 
+        try{
 
-        return res.status(200).json(response);
+            const {response, message, error} = await PhotoService.post(req.body)
+
+            if(error == true){
+                return res.status(404).json({error: message})
+            } 
+
+            return res.status(200).send(true);
+        }
+        catch(e){
+            return res.status(500).json({message:"Internal Server Error", error:true});            
+        }
     },
 
     async delete(req, res, next){
-        const {response, message, error} = await PhotoService.getById(req.body)
+        try
+        {
+            const {message, error} = await PhotoService.delete(req.body);
 
-        if(error == true){
-            return res.status(404).json({error: message})
-        }  
-
-        const data = await PhotoService.delete(req.body);
-
-        if(!data){
-            res.status(404).json({error:"Register doesn't exist"});
+            if(error){
+                res.status(404).json({message:message});
+            }
+            
+            return res.status(200).json(true);
         }
-        
-        return res.status(200).json(response);
+        catch(e){
+            return res.status(500).json({message:"Internal Server Error", error:true});            
+        }
     }
 }

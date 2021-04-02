@@ -1,4 +1,5 @@
 const UserService = require("../services/UserService");
+const Jwt = require('../Util/Jwt');
 
 module.exports = {
     async register(req, res, next){
@@ -16,7 +17,11 @@ module.exports = {
                 return res.status(404).json({error:"Error creating account"});
             }
 
-            return res.status(200).json(response);
+            const id = response['id']; 
+
+            const tokenHash = await Jwt.createJwt(id);
+
+            return res.status(200).json({obj:response, token:tokenHash});
         }
         catch(e)
         {

@@ -9,6 +9,12 @@ module.exports = {
         return await User.findOne({email : email});
     },
 
+    async getById(idUser){
+        const user = await User.findOne({_id:idUser}).lean();
+
+        return user;
+    },
+
     async post(params) {     
         params['password']= cript.crypt(params['password']);
 

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = '7738bab1ba61932c4bd595e3dba71f495faacca7400cc40db9c0f90ee0067391'
+const secret = process.env.secretJWTToken;
 
 module.exports={
     verifyJWT(req, res, next){

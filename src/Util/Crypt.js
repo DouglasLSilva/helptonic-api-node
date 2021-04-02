@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const secret = 's14i27d35l05';
+const secret = process.env.secretSHA256 || 's14i27d35l05';
 
 module.exports = {
     crypt(params){

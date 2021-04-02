@@ -8,13 +8,13 @@ module.exports = {
             const existEmail = await UserService.getByEmail(email);
 
             if(existEmail != null){
-                return res.status(404).json({error:"Email is already registered"});
+                return res.status(400).json({error:"Email is already registered"});
             }
 
             const response = await UserService.post(req.body)
 
             if(response == null){
-                return res.status(404).json({error:"Error creating account"});
+                return res.status(400).json({error:"Error creating account"});
             }
 
             const id = response['id']; 

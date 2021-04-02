@@ -7,7 +7,7 @@ module.exports = {
             const response = await LoginService.Login(req.body);
 
             if(response == null){
-                return res.status(404).json({message:"Incorrect email or password", error:true})
+                return res.status(400).json({message:"Incorrect email or password", error:true})
             }
             const id = response['id']; 
 

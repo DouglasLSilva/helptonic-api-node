@@ -29,10 +29,15 @@ module.exports = {
 
         var userId = params['userId'];
         var photoParams = params['photo'];
+        photoParams['data'] = Date.now();
         const verifyUser = await UserService.getById(userId);
        
         if(userId == undefined){
             return {message: 'user id undefined', error:true};
+        }
+
+        if(photoParams == undefined){
+            return {message: 'Url Image undefined', error:true};
         }
 
         const responseData = await User.updateOne({

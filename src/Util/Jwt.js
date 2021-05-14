@@ -13,7 +13,7 @@ module.exports={
           req.userId = decoded.id;
           next();
         });
-    } ,
+    },
     
     async createJwt(id){
         const jwtHash = jwt.sign({ id }, secret, {

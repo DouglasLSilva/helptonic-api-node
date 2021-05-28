@@ -5,11 +5,10 @@ AWS.config.update({ region: 'sa-east-1' });
 
 const S3_BUCKET = 'helptonic';
 const s3 = new AWS.S3({
-  accessKeyId: 'AKIAWHFZGRUIP4S5RZW4',
-  secretAccessKey: '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',
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
   region: 'sa-east-1',
   signatureVersion: "v4"
-  //   useAccelerateEndpoint: true
 });
 
 module.exports = {

@@ -23,13 +23,13 @@ module.exports = {
             const {response, message, error} = await PhotoService.post(req.body)
 
             if(error == true){
-                return res.status(400).json({message: message, error:true})
+                 return res.status(400).json({message: message, error:true})
             } 
 
             return res.status(200).send(true);
         }
         catch(e){
-            return res.status(500).json({message:"Internal Server Error", error:true});            
+             return res.status(500).json({message:"Internal Server Error", error:true});            
         }
     },
 

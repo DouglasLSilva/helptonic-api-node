@@ -16,6 +16,6 @@ routes.get('/photo',verifyJWT, PhotoController.getById);
 routes.post('/photo',verifyJWT, PhotoController.post);
 routes.delete('/photo',verifyJWT, PhotoController.delete);
 
-routes.post('/s3', S3Controller.getUrl);
+routes.post('/s3',verifyJWT, S3Controller.getUrl);
 
 module.exports = routes;

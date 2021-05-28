@@ -14,8 +14,6 @@ module.exports = {
             const tokenHash = await Jwt.createJwt(id);
             response['token'] = tokenHash
             return res.status(200).json(response);
-
-            // return res.status(200).json({obj:response , token:tokenHash});
         }
         catch(e)
         {

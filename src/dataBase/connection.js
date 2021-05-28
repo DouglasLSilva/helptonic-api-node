@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uri = "mongodb+srv://heltonic:daltonico123@helptonicdb.c5uyv.mongodb.net/HelptonicDataBase?retryWrites=true&w=majority";
+const uri = process.env.DB_URL;
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 var db = mongoose.connection;

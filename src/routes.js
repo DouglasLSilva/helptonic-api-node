@@ -1,21 +1,19 @@
 const express = require('express');
 const routes = express.Router();
-const { verifyJWT } = require('./Util/Jwt');
 
-const UsersController = require('./controllers/UsersController');
-const LoginController = require('./controllers/LoginController');
-const PhotoController = require('./controllers/PhotoController');
-const S3Controller = require('./controllers/S3Controller');
+const CategoriaController = require('./controllers/CategoriaController');
+const ProdutoController = require('./controllers/ProdutoController');
 
+routes.get('/categoria', CategoriaController.list);
+routes.get('/categoria/:id', CategoriaController.getById);
+routes.post('/categoria', CategoriaController.post);
+routes.put('/categoria', CategoriaController.put);
+routes.delete('/categoria/:id', CategoriaController.delete);
 
-routes.post('/user', UsersController.register);
-
-routes.post('/login', LoginController.login);
-
-routes.get('/photo',verifyJWT, PhotoController.getById);
-routes.post('/photo',verifyJWT, PhotoController.post);
-routes.delete('/photo',verifyJWT, PhotoController.delete);
-
-routes.post('/s3',verifyJWT, S3Controller.getUrl);
+routes.get('/produto', ProdutoController.list);
+routes.get('/produto/:id', ProdutoController.getById);
+routes.post('/produto', ProdutoController.post);
+routes.put('/produto', ProdutoController.put);
+routes.delete('/produto/:id', ProdutoController.delete);
 
 module.exports = routes;

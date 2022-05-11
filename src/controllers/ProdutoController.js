@@ -2,34 +2,55 @@ const ProdutoService = require("../services/ProdutoService");
 
 module.exports = {
     async list(req, res){
-        return res.json(await ProdutoService.list());
+        try{
+            return res.json(await ProdutoService.list());
+        }catch(error){
+            console.log(error)
+        }
     },
 
     async getById(req, res){
-        return res.json(await ProdutoService.getById(req.params));
+        try{
+            return res.json(await ProdutoService.getById(req.params));
+        }catch(error){
+            console.log(error)
+        }
     },
 
     async put(req, res){
-        const change = await ProdutoService.put(req.body);
+        try{
+            const change = await ProdutoService.put(req.body);
 
-        if(change != true){
-            return res.status(404).json({error: 'error'});
+            if(change != true){
+                return res.status(404).json({error: 'error'});
+            }
+
+            return res.status(200).send()
+
+        }catch(error){
+            console.log(error)
         }
-
-        return res.status(200).send()
     },
 
     async post(req, res){       
-        return res.json(await ProdutoService.post(req.body));
+        try{
+            return res.json(await ProdutoService.post(req.body));
+        }catch(error){
+            console.log(error)
+        }
     },
 
     async delete(req, res){
-        const data = await ProdutoService.delete(req.params);
+        try{
+            const data = await ProdutoService.delete(req.params);
 
-        if(!data){
-            res.json({error:"Register doesn't exist"});
+            if(!data){
+                res.json({error:"Register doesn't exist"});
+            }
+            
+            return res.status(200).send();
+        }catch(error){
+            console.log(error)
         }
-        
-        return res.status(200).send();
     }
 }

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uri = "mongodb+srv://estoque:estoque123@estoquen1.og9ah.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://estoque:estoque123@estoquen1.og9ah.mongodb.net/estoqueN1?retryWrites=true&w=majority";
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
